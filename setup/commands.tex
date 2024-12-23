@@ -1,0 +1,68 @@
+% User-defined commands go here. For any commands that require a specific
+% package to be loaded, begin the block with a comment line that specifies
+% "Required: ..." to clearly mark that it's a package-specific customization.
+
+\ifsubmit
+  \newcommand{\steve}[1]{}
+  \newcommand{\draft}[1]{}
+\else
+  \newcommand{\steve}[1]{\textcolor{red}{[SM: #1]}}
+  \newcommand{\draft}[1]{\textcolor{blue}{[Draft text: #1]}}
+\fi
+
+% ASEE requires centered titles in 14-point boldface font, with 1.5 inch margins
+% on the left and right sides.
+\makeatletter
+\renewcommand\maketitle
+{
+  \begin{center}
+    \begin{adjustwidth}{0.5in}{0.5in}
+      \centering
+      \fontsize{14}{\baselineskip}
+      \bfseries
+      \@title{}
+    \end{adjustwidth}
+  \end{center}
+}
+\makeatother
+
+% For some papers, we define new notation that only works in math mode. Ensure
+% that these can be easily mentioned in text, with the proper spacing, using the
+% following wrapper command.
+\newcommand{\emxs}[1]{\ensuremath{#1}\xspace}
+
+% Improve formatting of paragraphs.
+%\renewcommand{\paragraph}[1]{\medskip\noindent\textbf{#1}.}
+
+% Required: cite (possibly with noadjust option)
+% Fix ugly citation style: [1],[2] --> [1,2].
+%\renewcommand{\citepunct}{, }
+%\renewcommand{\citedash}{--}
+
+% Required: hyperref
+% The \autoref command ensures that the proper term is used for the relevant
+% reference. Customize the relevant terms for each reference type here.
+\renewcommand*{\sectionautorefname}{Sec.}
+\renewcommand*{\figureautorefname}{Fig.}
+\renewcommand*{\tableautorefname}{Tab.}
+% In some templates, subsections are referred to as "Subsection x.y", while
+% they may be referred to as "Section x.y" instead. The following line ensures
+% that sections and subsections are always referred to with the same identifier.
+\let{\subsectionautorefname}{\sectionautorefname}
+
+% Required: msc
+% Message sequence charts by default display "msc" in the corner of the chart.
+% Turn that off here.
+%\setmsckeyword{}
+
+% Required: titlesec
+% Ensure section headings are the same font and size as the rest of the
+% document, as required by ASEE.
+\newcommand{\formathdr}[2][\itshape]
+{
+  \titleformat*{#2}{\normalsize#1\raggedright}
+  \titlespacing{#2}{0pt}{\baselineskip}{0pt}
+}
+\formathdr[\bfseries]{\section}
+\formathdr{\subsection}
+\formathdr{\subsubsection}
